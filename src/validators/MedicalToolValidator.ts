@@ -6,7 +6,6 @@ export class MedicalToolValidator {
             .keys({
                 height: Joi.number().positive().required(),
                 weight: Joi.number().positive().required(),
-                age: Joi.number().positive().required(),
             })
             .required();
     }

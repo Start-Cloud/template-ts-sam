@@ -18,12 +18,12 @@ const IMC_CATEGORIES: { [category: string]: IMC_CATEGORY } = {
 export default class MedicalToolService {
     static async calculateIMC(event: APIGatewayProxyEvent) {
         const payload = AwsUtil.getRequest(event);
-        const { height, weight, age } = payload;
+        const { height, weight } = payload;
 
-        return this.getIMC(height, weight, age);
+        return this.getIMC(height, weight);
     }
 
-    static async getIMC(height: number, weight: number, age: number) {
+    static async getIMC(height: number, weight: number) {
         const imc = Number((weight / (height * height)).toFixed(2));
 
         LoggerUtil.info(`El IMC es de ${imc}`);
@@ -31,7 +31,6 @@ export default class MedicalToolService {
         return {
             imc,
             category: this.getCategory(imc),
-            age,
         };
     }
 

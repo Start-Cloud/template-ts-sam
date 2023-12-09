@@ -1,0 +1,10 @@
+{
+  "name": "template-ts-sam-layer",
+  "version": "1.0.0",
+  "description": "AWS SAM TypeScript template layer",
+  "author": "Start Cloud",
+  "dependencies": {
+    "@start-cloud/common-library-serverless": "^0.1.27",
+    "joi": "17.4.0"
+  }
+}
