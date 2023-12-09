@@ -1,5 +1,6 @@
 #  AWS SAM Template
 ## Configuración
+
 * samconfig.toml
 1. stack_name: Nombre del stack, se debe registrar uno por cada ambiente.
 2. s3_prefix: Prefijo del bucket donde se almacenará el código fuente de la aplicación.
