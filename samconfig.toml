@@ -1,0 +1,54 @@
+version = 0.1
+[dev]
+[dev.validate]
+[dev.validate.parameters]
+lint = true
+[dev.build]
+[dev.build.parameters]
+parallel = true
+[dev.deploy]
+[dev.deploy.parameters]
+stack_name = "dev-template-ts-sam"
+s3_prefix = "template-ts-sam"
+resolve_s3 = true
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+disable_rollback = false
+parameter_overrides = "stage=\"dev\""
+
+[qa]
+[qa.validate]
+[qa.validate.parameters]
+lint = true
+[qa.build]
+[qa.build.parameters]
+parallel = true
+[qa.deploy]
+[qa.deploy.parameters]
+stack_name = "qa-template-ts-sam"
+s3_prefix = "template-ts-sam"
+resolve_s3 = true
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+disable_rollback = false
+parameter_overrides = "stage=\"qa\""
+
+[prod]
+[prod.validate]
+[prod.validate.parameters]
+lint = true
+[prod.build]
+[prod.build.parameters]
+parallel = true
+[prod.deploy]
+[prod.deploy.parameters]
+stack_name = "prod-template-ts-sam"
+s3_prefix = "template-ts-sam"
+resolve_s3 = true
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+disable_rollback = false
+parameter_overrides = "stage=\"prod\""

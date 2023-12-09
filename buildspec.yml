@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - node --version
+      - echo Started on `date`
+  pre_build:
+    commands:
+      - echo Install source NPM dependencies...
+      - npm install --legacy-peer-deps
+      - npm install -g esbuild
+  build:
+    commands:
+      - echo $ENV_NAME
+      - echo Deployment started on `date`
+      - echo Deploying with the Serverless Application Model
+      - sam build
+      - sam deploy --config-env $ENV_NAME --no-confirm-changeset
+  post_build:
+    commands:
+      - echo Deployment completed on `date`

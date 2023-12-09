@@ -1,0 +1,97 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Description of what my serverless application does.
+
+Globals:
+  Function:
+    Timeout: 3
+    Environment:
+      Variables:
+        LOG_LEVEL: DEBUG
+
+Parameters:
+  stage:
+    Type: String
+    Default: dev
+    Description: (Required) the environment name of the deployment (e.g. dev, qa, prod), defaults to dev.
+    AllowedValues:
+      - dev
+      - qa
+      - prod
+  company:
+    Type: String
+    Default: cross
+    Description: (Required) the company name of the deployment (e.g. cross, cvl, bvl, datatec, finexo), defaults to cross.
+    AllowedValues:
+      - cross
+      - cvl
+      - bvl
+      - datatec
+      - finexo
+  project:
+    Type: String
+    Default: template-ts-sam
+    Description: the project name of the deployment.
+  version:
+    Type: String
+    Default: v1
+    Description: (Required) the version of the deployment (e.g. v1), defaults to v1.
+
+Resources:
+  #Creacón de un grupo de logs, se debe crear un grupo de logs por cada función lambda
+  CloudWatchLogsGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${stage}-${company}-${project}-${version}"
+      RetentionInDays: 30
+  #API Gateway
+  ImcAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub "${stage}-${company}-${project}-${version}-api-rest"
+      StageName: !Ref stage
+      Cors:
+        AllowMethods: "'OPTIONS,POST,GET,PUT,DELETE,PATCH'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowOrigin: "'*'"
+      Auth:
+        DefaultAuthorizer: NONE
+        AddDefaultAuthorizerToCorsPreflight: false
+  #Funciones Lambda
+  ImcFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "${stage}-${company}-${project}-${version}-imc"
+      Description: "Calculates the IMC of a person"
+      CodeUri: src/controllers/
+      Handler: MedicalToolController.bodyMassIndex
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      LoggingConfig:
+        LogGroup: !Ref CloudWatchLogsGroup
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Sid: CloudWatchLogGroup
+              Effect: Allow
+              Action:
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+              Resource: !GetAtt CloudWatchLogsGroup.Arn
+      Events:
+        ImcApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ImcAPI
+            Path: /imc
+            Method: post
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+        - MedicalToolController.ts
