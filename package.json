@@ -11,7 +11,7 @@
     "pre-commit": "npm run lint"
   },
   "dependencies": {
-    "@start-cloud/common-library-serverless": "^0.1.27",
+    "@start-cloud/common-library-serverless": "0.1.30",
     "joi": "17.4.0"
   },
   "devDependencies": {

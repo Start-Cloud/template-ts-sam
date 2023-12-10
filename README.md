@@ -17,11 +17,11 @@
 1. Parameters: Parámetros que se le pasarán al template CloudFormation. Se debe modificar los valores default para los parámetros company y project. El parámetro stage se sobreescribe en el archivo samconfig.toml.
 
 ## Construcción
- `` 
+```bash
 sam build
-``
+```
 
 ## Despliegue
-``
+```bash
 sam deploy --config-env "dev" --no-confirm-changeset
-``
+```

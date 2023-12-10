@@ -3,7 +3,6 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { AppValidator } from '@start-cloud/common-library-serverless/lib/validations';
 import { MedicalToolValidator } from '../validators/MedicalToolValidator';
 import MedicalToolService from '../services/MedicalToolService';
-import { BusinessError } from '@start-cloud/common-library-serverless/lib/error';
 
 export const bodyMassIndex = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
@@ -13,7 +12,7 @@ export const bodyMassIndex = async (event: APIGatewayProxyEvent): Promise<APIGat
         const response = await MedicalToolService.calculateIMC(event);
         return AwsUtil.buildResponse(response);
     } catch (error) {
-        LoggerUtil.error(error as object);
-        return AwsUtil.buildErrorResponse(event, error as BusinessError);
+        LoggerUtil.error(error);
+        return AwsUtil.buildErrorResponse(event, error);
     }
 };
