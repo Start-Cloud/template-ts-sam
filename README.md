@@ -1,7 +1,9 @@
 #  AWS SAM Template
 
 ## Configuración
+
 * samconfig.toml
+
 1. stack_name: Nombre del stack, se debe registrar uno por cada ambiente.
 2. s3_prefix: Prefijo del bucket donde se almacenará el código fuente de la aplicación.
 3. resolve_s3: Si se desea que el bucket sea creado por el CLI de SAM.
@@ -14,6 +16,7 @@
 10. parallel: Si se desea que el CLI de SAM haga el despliegue en paralelo.
 
 * template.yaml
+
 1. Parameters: Parámetros que se le pasarán al template CloudFormation. Se debe modificar los valores default para los parámetros company y project. El parámetro stage se sobreescribe en el archivo samconfig.toml.
 
 ## Construcción

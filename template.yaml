@@ -22,10 +22,10 @@ Parameters:
   company:
     Type: String
     Default: cross
-    Description: (Required) the company name of the deployment (e.g. cross, cvl, bvl, datatec, finexo), defaults to cross.
+    Description: (Required) the company name of the deployment (e.g. cross, cavali, bvl, datatec, finexo), defaults to cross.
     AllowedValues:
       - cross
-      - cvl
+      - cavali
       - bvl
       - datatec
       - finexo
@@ -50,7 +50,7 @@ Resources:
         - nodejs18.x
     Metadata:
       BuildMethod: nodejs18.x
-  #Creacón de un grupo de logs, se debe crear un grupo de logs por cada función lambda
+  #Creación de un grupo de logs, se debe crear un grupo de logs por cada función lambda
   CloudWatchLogsGroup:
     Type: AWS::Logs::LogGroup
     Properties:
